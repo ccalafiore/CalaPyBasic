@@ -1,7 +1,6 @@
 
 import math
 import numpy as np
-import torch
 from . import combinations as cp_comps
 
 
@@ -10,9 +9,9 @@ def round_to_closest_int(num):
     """
 
     :param num:
-    :type num: int | float | bool | list | tuple | np.ndarray | torch.Tensor
+    :type num: int | float | bool | list | tuple | np.ndarray
     :return: closest integers
-    :rtype: int | list | tuple | np.ndarray | torch.Tensor
+    :rtype: int | list | tuple | np.ndarray
     """
 
     if isinstance(num, (int, np.int8, np.int16, np.int32, np.int64)):
@@ -73,23 +72,23 @@ def round_to_closest_int(num):
             raise TypeError('num')
 
 
-    elif isinstance(num, torch.Tensor):
-
-        if num.dtype.is_floating_point:
-            int_down = num.floor().int()
-            int_up = num.ceil().int()
-            int_out = int_up
-            indexes_out = num < (int_up - 0.5)
-            int_out[indexes_out] = int_down[indexes_out]
-
-            return int_out
-
-        elif num.dtype.is_complex:
-            raise TypeError('num')
-        elif num.dtype == torch.bool:
-            return num.int()
-        else:
-            return num
+    # elif isinstance(num, torch.Tensor):
+    #
+    #     if num.dtype.is_floating_point:
+    #         int_down = num.floor().int()
+    #         int_up = num.ceil().int()
+    #         int_out = int_up
+    #         indexes_out = num < (int_up - 0.5)
+    #         int_out[indexes_out] = int_down[indexes_out]
+    #
+    #         return int_out
+    #
+    #     elif num.dtype.is_complex:
+    #         raise TypeError('num')
+    #     elif num.dtype == torch.bool:
+    #         return num.int()
+    #     else:
+    #         return num
 
     else:
         raise TypeError('num')
@@ -100,9 +99,9 @@ def round_down_to_closest_int(num):
     """
 
     :param num:
-    :type num: int | float | bool | list | tuple | np.ndarray | torch.Tensor
+    :type num: int | float | bool | list | tuple | np.ndarray
     :return: closest integers
-    :rtype: int | list | tuple | np.ndarray | torch.Tensor
+    :rtype: int | list | tuple | np.ndarray
     """
 
     if isinstance(num, (int, np.int8, np.int16, np.int32, np.int64)):
@@ -142,16 +141,16 @@ def round_down_to_closest_int(num):
 
             raise TypeError('num')
 
-    elif isinstance(num, torch.Tensor):
-
-        if num.dtype.is_floating_point:
-            return num.floor().int()
-        elif num.dtype.is_complex:
-            raise TypeError('num')
-        elif num.dtype == torch.bool:
-            return num.int()
-        else:
-            return num
+    # elif isinstance(num, torch.Tensor):
+    #
+    #     if num.dtype.is_floating_point:
+    #         return num.floor().int()
+    #     elif num.dtype.is_complex:
+    #         raise TypeError('num')
+    #     elif num.dtype == torch.bool:
+    #         return num.int()
+    #     else:
+    #         return num
 
     else:
         raise TypeError('num')
@@ -162,9 +161,9 @@ def round_up_to_closest_int(num):
     """
 
     :param num:
-    :type num: int | float | bool | list | tuple | np.ndarray | torch.Tensor
+    :type num: int | float | bool | list | tuple | np.ndarray
     :return: closest integers
-    :rtype: int | list | tuple | np.ndarray | torch.Tensor
+    :rtype: int | list | tuple | np.ndarray
     """
 
     if isinstance(num, (int, np.int8, np.int16, np.int32, np.int64)):
@@ -202,16 +201,16 @@ def round_up_to_closest_int(num):
         else:
             raise TypeError('num')
 
-    elif isinstance(num, torch.Tensor):
-
-        if num.dtype.is_floating_point:
-            return num.ceil().int()
-        elif num.dtype.is_complex:
-            raise TypeError('num')
-        elif num.dtype == torch.bool:
-            return num.int()
-        else:
-            return num
+    # elif isinstance(num, torch.Tensor):
+    #
+    #     if num.dtype.is_floating_point:
+    #         return num.ceil().int()
+    #     elif num.dtype.is_complex:
+    #         raise TypeError('num')
+    #     elif num.dtype == torch.bool:
+    #         return num.int()
+    #     else:
+    #         return num
 
     else:
         raise TypeError('num')
@@ -222,16 +221,16 @@ def round_to_closest_delta(num, delta=1):
     """
 
     :param num:
-    :type num: int | float | bool | list | tuple | np.ndarray | torch.Tensor
+    :type num: int | float | bool | list | tuple | np.ndarray
     :param delta:
     :type delta: int | float
     :return: closest integers
-    :rtype: int | list | tuple | np.ndarray | torch.Tensor
+    :rtype: int | list | tuple | np.ndarray
     """
 
     if isinstance(num, (int, float, np.int8, np.int16, np.int32, np.int64, np.float16, np.float32, np.float64)):
         return (round_to_closest_int(num=(np.asarray([num]) / delta)) * delta)[0].tolist()
-    elif isinstance(num, (np.ndarray, torch.Tensor)):
+    elif isinstance(num, np.ndarray):
         return round_to_closest_int(num=(num / delta)) * delta
     else:
         raise TypeError('num')
@@ -242,16 +241,16 @@ def round_down_to_closest_delta(num, delta=1):
     """
 
     :param num:
-    :type num: int | float | bool | list | tuple | np.ndarray | torch.Tensor
+    :type num: int | float | bool | list | tuple | np.ndarray
     :param delta:
     :type delta: int | float
     :return: closest integers
-    :rtype: int | list | tuple | np.ndarray | torch.Tensor
+    :rtype: int | list | tuple | np.ndarray
     """
 
     if isinstance(num, (int, float, np.int8, np.int16, np.int32, np.int64, np.float16, np.float32, np.float64)):
         return (round_down_to_closest_int(num=(np.asarray([num]) / delta)) * delta)[0].tolist()
-    elif isinstance(num, (np.ndarray, torch.Tensor)):
+    elif isinstance(num, np.ndarray):
         return round_down_to_closest_int(num=(num / delta)) * delta
     else:
         raise TypeError('num')
@@ -262,16 +261,16 @@ def round_up_to_closest_delta(num, delta=1):
     """
 
     :param num:
-    :type num: int | float | bool | list | tuple | np.ndarray | torch.Tensor
+    :type num: int | float | bool | list | tuple | np.ndarray
     :param delta:
     :type delta: int | float
     :return: closest integers
-    :rtype: int | list | tuple | np.ndarray | torch.Tensor
+    :rtype: int | list | tuple | np.ndarray
     """
 
     if isinstance(num, (int, float, np.int8, np.int16, np.int32, np.int64, np.float16, np.float32, np.float64)):
         return (round_up_to_closest_int(num=(np.asarray([num]) / delta)) * delta)[0].tolist()
-    elif isinstance(num, (np.ndarray, torch.Tensor)):
+    elif isinstance(num, np.ndarray):
         return round_up_to_closest_int(num=(num / delta)) * delta
     else:
         raise TypeError('num')
@@ -343,7 +342,7 @@ def factors_of_x(x, y=1):
 def prod(numbers, start=1):
 
     product = start
-    if isinstance(numbers, (np.ndarray, torch.Tensor)):
+    if isinstance(numbers, np.ndarray):
         for num_i in numbers.tolist():
             product *= num_i
     else:
